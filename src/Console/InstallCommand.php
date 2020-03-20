@@ -3,13 +3,11 @@
 namespace OwenIt\Auditing\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\DetectsApplicationNamespace;
+use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
-    use DetectsApplicationNamespace;
-
     /**
      * {@inheritdoc}
      */
@@ -56,5 +54,15 @@ class InstallCommand extends Command
             "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL."        OwenIt\Auditing\AuditingServiceProvider::class,".PHP_EOL,
             $appConfig
         ));
+    }
+
+    /**
+     * Get the application namespace.
+     *
+     * @return string
+     */
+    protected function getAppNamespace()
+    {
+        return Container::getInstance()->getNamespace();
     }
 }
